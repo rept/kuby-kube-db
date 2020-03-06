@@ -1,5 +1,0 @@
-module Kuby
-  module KubeDB
-    VERSION = '1.0.0'
-  end
-end

@@ -1,4 +1,5 @@
 require 'helm-rb'
+require 'kuby'
 
 module Kuby
   module KubeDB
@@ -6,7 +7,6 @@ module Kuby
     class OperatorDeployError < KubeDBError; end
 
     class Plugin < ::Kuby::Kubernetes::Plugin
-      VERSION = 'v0.13.0-rc.0'.freeze
       NAMESPACE = 'kube-system'.freeze
       REPO_NAME = 'appscode'.freeze
       REPO_URL = 'https://charts.appscode.com/stable/'.freeze
@@ -50,7 +50,7 @@ module Kuby
       def install_operator
         helm_cli.install_chart(OPERATOR_CHART_NAME, {
           release: OPERATOR_RELEASE_NAME,
-          version: VERSION,
+          version: Kuby::KubeDB::KUBEDB_VERSION,
           namespace: NAMESPACE,
           params: OPERATOR_PARAMS
         })
@@ -59,7 +59,7 @@ module Kuby
       def upgrade_operator
         helm_cli.upgrade_chart(OPERATOR_CHART_NAME, {
           release: OPERATOR_RELEASE_NAME,
-          version: VERSION,
+          version: Kuby::KubeDB::KUBEDB_VERSION,
           namespace: NAMESPACE,
           params: OPERATOR_PARAMS
         })
@@ -68,7 +68,7 @@ module Kuby
       def install_catalog
         helm_cli.install_chart(CATALOG_CHART_NAME, {
           release: CATALOG_RELEASE_NAME,
-          version: VERSION,
+          version: Kuby::KubeDB::KUBEDB_VERSION,
           namespace: NAMESPACE
         })
       end
@@ -76,7 +76,7 @@ module Kuby
       def upgrade_catalog
         helm_cli.upgrade_chart(CATALOG_CHART_NAME, {
           release: CATALOG_RELEASE_NAME,
-          version: VERSION,
+          version: Kuby::KubeDB::KUBEDB_VERSION,
           namespace: NAMESPACE
         })
       end

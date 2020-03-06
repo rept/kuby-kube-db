@@ -1,14 +1,66 @@
 require 'bundler'
-require 'rspec/core/rake_task'
+# require 'rspec/core/rake_task'
 require 'rubygems/package_task'
 
-require 'kuby/kubedb'
+require 'kuby/kube-db'
+require 'pry-byebug'
 
 Bundler::GemHelper.install_tasks
 
 task default: :spec
 
-desc 'Run specs'
-RSpec::Core::RakeTask.new do |t|
-  t.pattern = './spec/**/*_spec.rb'
+# desc 'Run specs'
+# RSpec::Core::RakeTask.new do |t|
+#   t.pattern = './spec/**/*_spec.rb'
+# end
+
+task :generate do
+  require 'dry/inflector'
+  require 'fileutils'
+
+  # delete anything that should be re-generated
+  FileUtils.rm_rf('./lib/kuby/kube-db/entrypoint.rb')
+  FileUtils.rm_rf('./lib/kuby/kube-db/dsl.rb')
+  FileUtils.rm_rf('./lib/kuby/kube-db/dsl')
+  FileUtils.mkdir_p('./lib/kuby/kube-db/dsl')
+  FileUtils.mkdir_p('./vendor')
+
+  schema_url = "https://github.com/kubedb/apimachinery/blob/#{Kuby::KubeDB::KUBEDB_VERSION}/api/openapi-spec/swagger.json?raw=true"
+  local_json_schema_path = 'vendor/json_schema'
+
+  unless File.exist?(local_json_schema_path)
+    FileUtils.mkdir_p(local_json_schema_path)
+    system('docker pull garethr/openapi2jsonschema')
+
+    system(<<~END)
+      docker run --rm \
+        -v #{File.expand_path(local_json_schema_path)}:/usr/local/json_schema \
+        garethr/openapi2jsonschema \
+        --kubernetes --output /usr/local/json_schema #{schema_url}
+    END
+  end
+
+  Dir.chdir('lib') do
+    generator = KubeDSL::Generator.new(
+      schema_dir: File.join('..', local_json_schema_path),
+      output_dir: File.join('kuby', 'kube-db', 'dsl'),
+      inflector: Dry::Inflector.new do |inflections|
+        inflections.acronym('DSL')
+        inflections.acronym('DB')
+      end
+    )
+
+    # WTF even is xyz.kmodules??
+    generator.builder.register_resolver('io.k8s', 'xyz.kmodules') do |ref_str, builder|
+      ::KubeDSL::ExternalRef.new(
+        ref_str,
+        ['KubeDSL', 'DSL'],
+        'kube-dsl/dsl',
+        builder.inflector,
+        builder.schema_dir
+      )
+    end
+
+    generator.generate
+  end
 end
