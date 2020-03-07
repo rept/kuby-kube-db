@@ -9,7 +9,7 @@ module Kuby::KubeDB::DSL::Kubedb::V1alpha1
       end
     end
 
-    def kind
+    def kind_sym
       :member_secret
     end
   end

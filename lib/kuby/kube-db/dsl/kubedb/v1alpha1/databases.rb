@@ -2,7 +2,7 @@ module Kuby::KubeDB::DSL::Kubedb::V1alpha1
   class Databases < ::KubeDSL::DSLObject
     value_fields :alias, :database_name
     object_field(:database_secret_ref) { KubeDSL::DSL::V1::LocalObjectReference.new }
-    object_field(:database_ref) { KubeDSL::DSL::Appcatalog::V1alpha1::AppReference.new }
+    object_field(:database_ref) { Kuby::KubeDB::DSL::Appcatalog::V1alpha1::AppReference.new }
 
     def serialize
       {}.tap do |result|
@@ -13,7 +13,7 @@ module Kuby::KubeDB::DSL::Kubedb::V1alpha1
       end
     end
 
-    def kind
+    def kind_sym
       :databases
     end
   end

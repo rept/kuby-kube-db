@@ -3,9 +3,9 @@ module Kuby::KubeDB::DSL::Kubedb::V1alpha1
     value_fields :replicas, :paused, :version
     array_field(:database) { Kuby::KubeDB::DSL::Kubedb::V1alpha1::Databases.new }
     object_field(:tls) { Kuby::KubeDB::DSL::Kubedb::V1alpha1::TLSConfig.new }
-    object_field(:service_template) { KubeDSL::DSL::Api::V1::ServiceTemplateSpec.new }
-    object_field(:monitor) { KubeDSL::DSL::Api::V1::AgentSpec.new }
-    object_field(:pod_template) { KubeDSL::DSL::Api::V1::PodTemplateSpec.new }
+    object_field(:service_template) { Kuby::KubeDB::DSL::Api::V1::ServiceTemplateSpec.new }
+    object_field(:monitor) { Kuby::KubeDB::DSL::Api::V1::AgentSpec.new }
+    object_field(:pod_template) { Kuby::KubeDB::DSL::Api::V1::PodTemplateSpec.new }
     object_field(:connection_pool) { Kuby::KubeDB::DSL::Kubedb::V1alpha1::ConnectionPoolConfig.new }
     object_field(:user_list_secret_ref) { KubeDSL::DSL::V1::LocalObjectReference.new }
 
@@ -24,7 +24,7 @@ module Kuby::KubeDB::DSL::Kubedb::V1alpha1
       end
     end
 
-    def kind
+    def kind_sym
       :pg_bouncer_spec
     end
   end

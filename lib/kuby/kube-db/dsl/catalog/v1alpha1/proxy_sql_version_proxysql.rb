@@ -8,7 +8,7 @@ module Kuby::KubeDB::DSL::Catalog::V1alpha1
       end
     end
 
-    def kind
+    def kind_sym
       :proxy_sql_version_proxysql
     end
   end

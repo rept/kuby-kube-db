@@ -10,7 +10,7 @@ module Kuby::KubeDB::DSL::Kubedb::V1alpha1
       end
     end
 
-    def kind
+    def kind_sym
       :proxy_sql_backend_spec
     end
   end

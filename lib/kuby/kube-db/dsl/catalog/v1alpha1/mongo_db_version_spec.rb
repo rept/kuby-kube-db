@@ -19,7 +19,7 @@ module Kuby::KubeDB::DSL::Catalog::V1alpha1
       end
     end
 
-    def kind
+    def kind_sym
       :mongo_db_version_spec
     end
   end
