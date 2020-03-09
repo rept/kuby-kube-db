@@ -52,15 +52,23 @@ task :generate do
 
     # WTF even is xyz.kmodules??
     generator.builder.register_resolver('io.k8s', 'xyz.kmodules') do |ref_str, builder|
-      ::KubeDSL::ExternalRef.new(
+      external_ref = ::KubeDSL::ExternalRef.new(
         ref_str,
         ['KubeDSL', 'DSL'],
         'kube-dsl/dsl',
         builder.inflector,
         builder.schema_dir
       )
+
+      ns = external_ref.ruby_namespace + [external_ref.kind]
+      exists = Module.const_get(ns.join('::')) rescue false
+      exists ? external_ref : builder.parse_ref(ref_str)
     end
 
-    generator.generate
+    generator.generate_resource_files
+    generator.generate_autoload_files
+    generator.generate_entrypoint_file do |resource, ns|
+      ns =~ /Kuby::KubeDB::DSL::Kubedb::V1alpha1/
+    end
   end
 end
