@@ -61,7 +61,7 @@ task :generate do
       )
 
       ns = external_ref.ruby_namespace + [external_ref.kind]
-      exists = Module.const_get(ns.join('::')) rescue false
+      exists = ns.inject(Object) { |mod, n| mod.const_get(n, false) } rescue false
       exists ? external_ref : builder.parse_ref(ref_str)
     end
 
