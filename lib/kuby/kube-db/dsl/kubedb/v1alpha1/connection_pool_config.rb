@@ -1,7 +1,6 @@
 module Kuby::KubeDB::DSL::Kubedb::V1alpha1
   class ConnectionPoolConfig < ::KubeDSL::DSLObject
-    value_fields :default_pool_size, :auth_type, :auth_user, :max_db_connections, :stats_period_seconds, :max_user_connections, :reserve_pool_size, :pool_mode, :port, :ignore_startup_parameters, :reserve_pool_timeout_seconds, :max_client_connections, :min_pool_size
-    array_field :admin_user
+    value_fields :default_pool_size, :auth_type, :auth_user, :max_db_connections, :stats_period_seconds, :max_user_connections, :reserve_pool_size, :pool_mode, :port, :ignore_startup_parameters, :reserve_pool_timeout_seconds, :max_client_connections, :min_pool_size, :admin_users
 
     def serialize
       {}.tap do |result|

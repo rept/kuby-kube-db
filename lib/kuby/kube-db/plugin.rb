@@ -26,23 +26,23 @@ module Kuby
       OPERATOR_PARAMS.freeze
 
       def setup
-        Kuby.logger.info(ColorizedString['Setting up kubedb'].yellow)
+        Kuby.logger.info('Setting up kubedb')
 
-        Kuby.logger.info(ColorizedString['Fetching Helm chart'].yellow)
+        Kuby.logger.info('Fetching Helm chart')
         helm_cli.add_repo(REPO_NAME, REPO_URL)
         helm_cli.update_repos
 
-        Kuby.logger.info(ColorizedString['Deploying kubedb operator'].yellow)
+        Kuby.logger.info('Deploying kubedb operator')
         operator_deployed? ? upgrade_operator : install_operator
 
         wait_for_operator do
-          Kuby.logger.info(ColorizedString['Waiting for kubedb operator deployment'].yellow)
+          Kuby.logger.info('Waiting for kubedb operator deployment')
         end
 
-        Kuby.logger.info(ColorizedString['Deploying kubedb catalog'].yellow)
+        Kuby.logger.info('Deploying kubedb catalog')
         catalog_deployed? ? upgrade_catalog : install_catalog
 
-        Kuby.logger.info(ColorizedString['Kubedb setup finished'].yellow)
+        Kuby.logger.info('Kubedb setup finished')
       end
 
       private
@@ -167,7 +167,7 @@ module Kuby
       end
 
       def helm_cli
-        @helm_cli ||= HelmRb::CLI.new(provider.kubeconfig_path)
+        @helm_cli ||= HelmCLI.new(provider.kubeconfig_path)
       end
 
       def kubernetes_cli

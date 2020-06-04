@@ -12,9 +12,8 @@ Gem::Specification.new do |s|
 
   s.platform = Gem::Platform::RUBY
 
-  s.add_dependency 'kuby', '~> 1.0'
-  s.add_dependency 'helm-rb', '~> 3.0'
+  s.add_dependency 'helm-rb', '~> 0.1'
 
   s.require_path = 'lib'
-  s.files = Dir['{lib,spec}/**/*', 'Gemfile', 'CHANGELOG.md', 'README.md', 'Rakefile', 'kuby-kube-db.gemspec']
+  s.files = Dir['{lib,spec}/**/*', 'Gemfile', 'LICENSE', 'CHANGELOG.md', 'README.md', 'Rakefile', 'kuby-kube-db.gemspec']
 end

@@ -1,7 +1,6 @@
 module Kuby::KubeDB::DSL::Api::V1
   class PodSpec < ::KubeDSL::DSLObject
-    value_fields :priority_class_name, :service_account_name, :scheduler_name, :priority
-    array_field :arg
+    value_fields :priority_class_name, :service_account_name, :scheduler_name, :args, :priority
     array_field(:env) { KubeDSL::DSL::V1::EnvVar.new }
     array_field(:toleration) { KubeDSL::DSL::V1::Toleration.new }
     array_field(:init_container) { KubeDSL::DSL::V1::Container.new }
@@ -19,8 +18,8 @@ module Kuby::KubeDB::DSL::Api::V1
         result[:priorityClassName] = priority_class_name
         result[:serviceAccountName] = service_account_name
         result[:schedulerName] = scheduler_name
-        result[:priority] = priority
         result[:args] = args
+        result[:priority] = priority
         result[:env] = envs.map(&:serialize)
         result[:tolerations] = tolerations.map(&:serialize)
         result[:initContainers] = init_containers.map(&:serialize)

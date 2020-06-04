@@ -1,19 +1,15 @@
 module Kuby::KubeDB::DSL::Kubedb::V1alpha1
   class CertificateSpec < ::KubeDSL::DSLObject
-    value_fields :renew_before, :duration
-    array_field :uri_san
-    array_field :dns_name
-    array_field :ip_address
-    array_field :organization
+    value_fields :uri_sa_ns, :dns_names, :renew_before, :ip_addresses, :duration, :organization
 
     def serialize
       {}.tap do |result|
-        result[:renewBefore] = renew_before
-        result[:duration] = duration
-        result[:uriSANs] = uri_sans
+        result[:uriSANs] = uri_sa_ns
         result[:dnsNames] = dns_names
+        result[:renewBefore] = renew_before
         result[:ipAddresses] = ip_addresses
-        result[:organization] = organizations
+        result[:duration] = duration
+        result[:organization] = organization
       end
     end
 
