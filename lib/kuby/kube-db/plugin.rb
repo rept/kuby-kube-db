@@ -1,4 +1,4 @@
-require 'helm-rb'
+require 'helm-cli'
 require 'kuby'
 
 module Kuby

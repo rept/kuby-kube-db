@@ -8,6 +8,8 @@ group :development do
 end
 
 group :development, :test do
+  gem 'kuby', path: '../kuby'
+  gem 'kuby-cert-manager', path: '../kuby-cert-manager'
   gem 'pry-byebug'
   gem 'rake'
 end
@@ -15,7 +17,3 @@ end
 group :test do
   gem 'rspec', '~> 3.0'
 end
-
-# @TODO: remove
-gem 'kuby', path: '../kuby'
-gem 'kuby-cert-manager', path: '../kuby-cert-manager'
