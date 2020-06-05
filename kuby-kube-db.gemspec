@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.version  = ::Kuby::KubeDB::VERSION
   s.authors  = ['Cameron Dutro']
   s.email    = ['camertron@gmail.com']
-  s.homepage = 'http://github.com/camertron/kuby-kube-db'
+  s.homepage = 'http://github.com/getkuby/kuby-kube-db'
 
   s.description = s.summary = 'KubeDB plugin for Kuby.'
 

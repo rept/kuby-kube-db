@@ -1,5 +1,6 @@
 require 'helm-cli'
 require 'kuby'
+require 'kuby/kube-db/version'
 
 module Kuby
   module KubeDB
