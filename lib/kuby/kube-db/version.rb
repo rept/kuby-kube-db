@@ -1,6 +1,6 @@
 module Kuby
   module KubeDB
-    VERSION = '0.2.0'.freeze
+    VERSION = '0.3.0'.freeze
     KUBEDB_VERSION = 'v0.13.0-rc.4'.freeze
   end
 end
