@@ -11,7 +11,7 @@ module Kuby::KubeDB::DSL::Api::V1
     object_field(:readiness_probe) { KubeDSL::DSL::V1::Probe.new }
     object_field(:lifecycle) { KubeDSL::DSL::V1::Lifecycle.new }
     object_field(:resources) { KubeDSL::DSL::V1::ResourceRequirements.new }
-    object_field(:node_selector) { ::KubeDSL::KeyValueFields.new(format: :string) }
+    key_value_field(:node_selector, format: :string)
 
     def serialize
       {}.tap do |result|

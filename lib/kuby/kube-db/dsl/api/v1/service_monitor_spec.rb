@@ -1,7 +1,7 @@
 module Kuby::KubeDB::DSL::Api::V1
   class ServiceMonitorSpec < ::KubeDSL::DSLObject
     value_fields :namespace, :interval
-    object_field(:labels) { ::KubeDSL::KeyValueFields.new(format: :string) }
+    key_value_field(:labels, format: :string)
 
     def serialize
       {}.tap do |result|

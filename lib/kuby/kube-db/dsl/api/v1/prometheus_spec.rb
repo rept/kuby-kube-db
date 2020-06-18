@@ -3,7 +3,7 @@ module Kuby::KubeDB::DSL::Api::V1
     value_fields :namespace, :interval, :port
     object_field(:exporter) { Kuby::KubeDB::DSL::Api::V1::PrometheusExporterSpec.new }
     object_field(:service_monitor) { Kuby::KubeDB::DSL::Api::V1::ServiceMonitorSpec.new }
-    object_field(:labels) { ::KubeDSL::KeyValueFields.new(format: :string) }
+    key_value_field(:labels, format: :string)
 
     def serialize
       {}.tap do |result|

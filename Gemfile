@@ -4,11 +4,10 @@ gemspec
 
 group :development do
   gem 'dry-inflector'
-  gem 'kube-dsl', '~> 0.1'
 end
 
 group :development, :test do
-  gem 'kuby', path: '../kuby'
+  gem 'kuby-core', path: '../kuby-core'
   gem 'kuby-cert-manager', path: '../kuby-cert-manager'
   gem 'pry-byebug'
   gem 'rake'
