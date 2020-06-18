@@ -1,9 +1,10 @@
 module Kuby::KubeDB::DSL::Catalog::V1alpha1
   class PostgresVersionPodSecurityPolicy < ::KubeDSL::DSLObject
-    value_fields :database_policy_name
+    value_fields :snapshotter_policy_name, :database_policy_name
 
     def serialize
       {}.tap do |result|
+        result[:snapshotterPolicyName] = snapshotter_policy_name
         result[:databasePolicyName] = database_policy_name
       end
     end

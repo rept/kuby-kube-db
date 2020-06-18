@@ -1,6 +1,6 @@
 module Kuby::KubeDB::DSL::Catalog::V1alpha1
   class ElasticsearchVersionSpec < ::KubeDSL::DSLObject
-    value_fields :deprecated, :version, :auth_plugin
+    value_fields :deprecated, :version
     object_field(:exporter) { Kuby::KubeDB::DSL::Catalog::V1alpha1::ElasticsearchVersionExporter.new }
     object_field(:pod_security_policies) { Kuby::KubeDB::DSL::Catalog::V1alpha1::ElasticsearchVersionPodSecurityPolicy.new }
     object_field(:init_container) { Kuby::KubeDB::DSL::Catalog::V1alpha1::ElasticsearchVersionInitContainer.new }
@@ -11,7 +11,6 @@ module Kuby::KubeDB::DSL::Catalog::V1alpha1
       {}.tap do |result|
         result[:deprecated] = deprecated
         result[:version] = version
-        result[:authPlugin] = auth_plugin
         result[:exporter] = exporter.serialize
         result[:podSecurityPolicies] = pod_security_policies.serialize
         result[:initContainer] = init_container.serialize

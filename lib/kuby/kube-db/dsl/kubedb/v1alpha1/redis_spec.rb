@@ -1,6 +1,6 @@
 module Kuby::KubeDB::DSL::Kubedb::V1alpha1
   class RedisSpec < ::KubeDSL::DSLObject
-    value_fields :paused, :replicas, :termination_policy, :halted, :version, :storage_type, :mode
+    value_fields :replicas, :termination_policy, :version, :storage_type, :mode
     object_field(:service_template) { Kuby::KubeDB::DSL::Api::V1::ServiceTemplateSpec.new }
     object_field(:monitor) { Kuby::KubeDB::DSL::Api::V1::AgentSpec.new }
     object_field(:pod_template) { Kuby::KubeDB::DSL::Api::V1::PodTemplateSpec.new }
@@ -11,10 +11,8 @@ module Kuby::KubeDB::DSL::Kubedb::V1alpha1
 
     def serialize
       {}.tap do |result|
-        result[:paused] = paused
         result[:replicas] = replicas
         result[:terminationPolicy] = termination_policy
-        result[:halted] = halted
         result[:version] = version
         result[:storageType] = storage_type
         result[:mode] = mode

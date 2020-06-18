@@ -5,7 +5,6 @@ module Kuby::KubeDB::DSL::V1
     object_field(:git_repo) { KubeDSL::DSL::V1::GitRepoVolumeSource.new }
     object_field(:flocker) { KubeDSL::DSL::V1::FlockerVolumeSource.new }
     object_field(:storageos) { KubeDSL::DSL::V1::StorageOSVolumeSource.new }
-    object_field(:csi) { KubeDSL::DSL::V1::CSIVolumeSource.new }
     object_field(:iscsi) { KubeDSL::DSL::V1::ISCSIVolumeSource.new }
     object_field(:projected) { KubeDSL::DSL::V1::ProjectedVolumeSource.new }
     object_field(:secret) { KubeDSL::DSL::V1::SecretVolumeSource.new }
@@ -36,7 +35,6 @@ module Kuby::KubeDB::DSL::V1
         result[:gitRepo] = git_repo.serialize
         result[:flocker] = flocker.serialize
         result[:storageos] = storageos.serialize
-        result[:csi] = csi.serialize
         result[:iscsi] = iscsi.serialize
         result[:projected] = projected.serialize
         result[:secret] = secret.serialize
