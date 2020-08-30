@@ -1,3 +1,7 @@
+## 0.5.0
+* Conform to new plugin architecture.
+* Accept `environment` instead of `definition` instances.
+
 ## 0.4.0
 * Downgrade to kubedb 0.12.0, the latest stable release.
   - For some reason, the API spec for 0.13.0.rc-0 was removed from the apimachinery repo.

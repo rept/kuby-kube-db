@@ -7,7 +7,7 @@ module Kuby
     class KubeDBError < StandardError; end
     class OperatorDeployError < KubeDBError; end
 
-    class Plugin < ::Kuby::Kubernetes::Plugin
+    class Plugin < ::Kuby::Plugin
       NAMESPACE = 'kube-system'.freeze
       REPO_NAME = 'appscode'.freeze
       REPO_URL = 'https://charts.appscode.com/stable/'.freeze
@@ -176,7 +176,7 @@ module Kuby
       end
 
       def provider
-        definition.kubernetes.provider
+        environment.kubernetes.provider
       end
     end
   end
