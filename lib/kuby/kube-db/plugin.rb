@@ -6,6 +6,7 @@ module Kuby
   module KubeDB
     class KubeDBError < StandardError; end
     class OperatorDeployError < KubeDBError; end
+    class APIResourcesError < KubeDBError; end
 
     class Plugin < ::Kuby::Plugin
       NAMESPACE = 'kube-system'.freeze
@@ -16,8 +17,8 @@ module Kuby
       CATALOG_RELEASE_NAME = 'kubedb-catalog'.freeze
       OPERATOR_CHART_NAME = 'appscode/kubedb'.freeze
       CATALOG_CHART_NAME = 'appscode/kubedb-catalog'.freeze
-      OPERATOR_WAIT_INTERVAL = 5  # seconds
-      OPERATOR_WAIT_MAX = 60      # seconds
+      WAIT_INTERVAL = 5  # seconds
+      WAIT_MAX = 120     # seconds
 
       OPERATOR_PARAMS = {
         'apiserver.enableValidatingWebhook' => 'true',
@@ -38,6 +39,10 @@ module Kuby
 
         wait_for_operator do
           Kuby.logger.info('Waiting for kubedb operator deployment')
+        end
+
+        wait_for_api_resources do
+          Kuby.logger.info('Waiting for API resources to become available')
         end
 
         Kuby.logger.info('Deploying kubedb catalog')
@@ -88,15 +93,35 @@ module Kuby
         loop do
           break if operator_ready?
 
-          if time_elapsed >= OPERATOR_WAIT_MAX
+          if time_elapsed >= WAIT_MAX
             raise OperatorDeployError, 'timeout waiting for operator to start. '\
               "Waited #{time_elapsed}s."
           end
 
           yield
 
-          sleep OPERATOR_WAIT_INTERVAL
-          time_elapsed += OPERATOR_WAIT_INTERVAL
+          sleep WAIT_INTERVAL
+          time_elapsed += WAIT_INTERVAL
+        end
+      end
+
+      def wait_for_api_resources
+        time_elapsed = 0
+
+        loop do
+          begin
+            if time_elapsed >= WAIT_MAX
+              raise APIResourcesError, 'timeout waiting for API resources to '\
+                "become available. Waited #{time_elapsed}s."
+            end
+
+            kubernetes_cli.api_resources
+            break
+          rescue KubernetesCLI::KubernetesError
+            yield
+            sleep WAIT_INTERVAL
+            time_elapsed += WAIT_INTERVAL
+          end
         end
       end
 
@@ -168,7 +193,7 @@ module Kuby
       end
 
       def helm_cli
-        @helm_cli ||= HelmCLI.new(provider.kubeconfig_path)
+        provider.helm_cli
       end
 
       def kubernetes_cli

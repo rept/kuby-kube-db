@@ -1,3 +1,7 @@
+## 0.6.0
+* Wait for API resources to become available.
+  - Krane queries k8s for API resources which causes kubectl to exit with a non-zero status code if KubeDB's operator isn't finished spinning up.
+
 ## 0.5.0
 * Conform to new plugin architecture.
 * Accept `environment` instead of `definition` instances.
