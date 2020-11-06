@@ -18,7 +18,7 @@ module Kuby
       OPERATOR_CHART_NAME = 'appscode/kubedb'.freeze
       CATALOG_CHART_NAME = 'appscode/kubedb-catalog'.freeze
       WAIT_INTERVAL = 5  # seconds
-      WAIT_MAX = 120     # seconds
+      WAIT_MAX = 300     # seconds
 
       OPERATOR_PARAMS = {
         'apiserver.enableValidatingWebhook' => 'true',
